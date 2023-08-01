@@ -15,13 +15,13 @@ class DioClient {
           const Duration(seconds: Endpoints.receiveTimeout)
       ..options.responseType = ResponseType.json
       ..interceptors.addAll([
-        LogInterceptor(
-          request: true,
-          requestHeader: true,
-          requestBody: true,
-          responseHeader: true,
-          responseBody: true,
-        ),
+        // LogInterceptor(
+        //   request: true,
+        //   requestHeader: true,
+        //   requestBody: true,
+        //   responseHeader: true,
+        //   responseBody: true,
+        // ),
         InterceptorsWrapper(
           onRequest: (options, handler) {
             // Add the access token to the request header

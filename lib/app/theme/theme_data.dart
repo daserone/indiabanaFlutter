@@ -13,8 +13,11 @@ class ThemeConfig {
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorConstants.indiabanaOrange,
           foregroundColor: Colors.white,
+          disabledBackgroundColor:
+              ColorConstants.indiabanaOrange.withOpacity(0.5),
+          disabledForegroundColor: const Color.fromARGB(255, 69, 69, 69),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(5),
           ),
         ),
       ),

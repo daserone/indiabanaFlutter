@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/data/storage/storage_service.dart';
 import 'package:indiabana_app/app/modules/home/views/widgets/banner_carousel.dart';
+import 'package:indiabana_app/app/modules/home/views/widgets/banner_publicity.dart';
+import 'package:indiabana_app/app/modules/home/views/widgets/categories_cards.dart';
 import 'package:indiabana_app/app/modules/home/views/widgets/categories_list.dart';
+import 'package:indiabana_app/app/modules/home/views/widgets/selected_category_products.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
 import 'package:indiabana_app/app/shared/widgets/common_appbar.dart';
 import 'package:indiabana_app/app/shared/widgets/common_drawer.dart';
@@ -16,7 +18,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppBar(title: 'INDIABANA'),
-      body: Column(
+      body: ListView(
         children: [
           const CategoriesList(),
           SizedBox(
@@ -65,14 +67,26 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-          Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  final controller = Get.find<AuthenticationManager>();
-                  controller.deleteUser();
-                },
-                child: const Text('dada')),
+          const SizedBox(
+            height: 20,
           ),
+          const BannerPublicity(),
+          const SizedBox(
+            height: 20,
+          ),
+          const CategoriesCards(),
+          const SizedBox(
+            height: 20,
+          ),
+          const SelectedCategoryProducts(),
+          // Center(
+          //   child: ElevatedButton(
+          //       onPressed: () {
+          //         final controller = Get.find<AuthenticationManager>();
+          //         controller.deleteUser();
+          //       },
+          //       child: const Text('dada')),
+          // ),
         ],
       ),
       drawer: const CommonDrawer(),
