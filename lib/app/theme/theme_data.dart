@@ -30,9 +30,18 @@ class ThemeConfig {
           statusBarBrightness: Brightness.light,
         ),
       ),
-      inputDecorationTheme: const InputDecorationTheme(
+      inputDecorationTheme: InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        //  contentPadding: EdgeInsets.zero,
+        hintStyle: const TextStyle(color: Colors.grey),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade400),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorConstants.indiabanaOrange),
+        ),
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
+        ),
       ),
       textSelectionTheme: const TextSelectionThemeData(
         selectionHandleColor: Colors.transparent,

@@ -1,21 +1,13 @@
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // login or register
+  RxBool _isLogin = true.obs;
+  bool get isLogin => _isLogin.value;
+  set isLogin(bool value) => _isLogin.value = value;
 
-  @override
-  void onReady() {
-    super.onReady();
+  // change login
+  void changeLogin() {
+    isLogin = !isLogin;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
