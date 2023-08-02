@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/data/models/response/categories_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_cat_response.dart';
@@ -13,6 +14,16 @@ class HomeController extends GetxController {
   final categoriesRepository = getIt.get<CategoriesRepository>();
   final commonRepository = getIt.get<CommonRepository>();
   final productsRepository = getIt.get<ProductsRepository>();
+  //pageview
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
+  RxInt _currentPage = 0.obs;
+  //get and set
+  int get currentPage => _currentPage.value;
+  set currentPage(int value) => _currentPage.value = value;
+
   //banners
   RxList<String> _banners = <String>[].obs;
   //get and set
@@ -47,6 +58,17 @@ class HomeController extends GetxController {
     getCategories();
     getBanners();
     super.onInit();
+  }
+  //page events
+
+  void pageChanged(int index) {
+    currentPage = index;
+  }
+
+  void bottomTapped(int index) {
+    currentPage = index;
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   void getCategories() async {

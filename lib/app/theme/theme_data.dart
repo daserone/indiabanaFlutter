@@ -37,6 +37,11 @@ class ThemeConfig {
       textSelectionTheme: const TextSelectionThemeData(
         selectionHandleColor: Colors.transparent,
       ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: ColorConstants.indiabanaDarkBlue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(0.5),
+      ),
     );
   }
 

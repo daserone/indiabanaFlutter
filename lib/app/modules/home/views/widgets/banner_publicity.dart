@@ -6,8 +6,12 @@ class BannerPublicity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Todo para tu vehículo en cuestión de HORAS'),
+        const Padding(
+          padding: EdgeInsets.only(left: 12.0),
+          child: Text('Todo para tu vehículo en cuestión de HORAS'),
+        ),
         const SizedBox(
           height: 20,
         ),

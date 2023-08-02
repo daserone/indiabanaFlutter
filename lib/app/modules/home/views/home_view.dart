@@ -7,8 +7,6 @@ import 'package:indiabana_app/app/modules/home/views/widgets/categories_cards.da
 import 'package:indiabana_app/app/modules/home/views/widgets/categories_list.dart';
 import 'package:indiabana_app/app/modules/home/views/widgets/selected_category_products.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
-import 'package:indiabana_app/app/shared/widgets/common_appbar.dart';
-import 'package:indiabana_app/app/shared/widgets/common_drawer.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -17,7 +15,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppBar(title: 'INDIABANA'),
       body: ListView(
         children: [
           const CategoriesList(),
@@ -89,7 +86,6 @@ class HomeView extends GetView<HomeController> {
           // ),
         ],
       ),
-      drawer: const CommonDrawer(),
     );
   }
 }

@@ -13,6 +13,7 @@ class CategoriesCards extends StatelessWidget {
       () => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Explorar por categorías'),
             const SizedBox(
