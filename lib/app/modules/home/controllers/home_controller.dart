@@ -7,6 +7,8 @@ import 'package:indiabana_app/app/data/models/response/products_cat_response.dar
 import 'package:indiabana_app/app/data/repository/categories_repository.dart';
 import 'package:indiabana_app/app/data/repository/common_repository.dart';
 import 'package:indiabana_app/app/data/repository/products_repository.dart';
+import 'package:indiabana_app/app/data/repository/user_repository.dart';
+import 'package:indiabana_app/app/data/storage/storage_service.dart';
 import 'package:indiabana_app/app/di/service_locator.dart';
 import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 
@@ -14,6 +16,10 @@ class HomeController extends GetxController {
   final categoriesRepository = getIt.get<CategoriesRepository>();
   final commonRepository = getIt.get<CommonRepository>();
   final productsRepository = getIt.get<ProductsRepository>();
+  final usersRepository = getIt.get<UsersRepository>();
+
+  final cacheController = Get.find<AuthenticationManager>();
+
   //pageview
   PageController pageController = PageController(
     initialPage: 0,
@@ -57,6 +63,10 @@ class HomeController extends GetxController {
   void onInit() {
     getCategories();
     getBanners();
+    //check if token exist
+    // if (cacheController.token != '') {
+    //   getProfile();
+    // }
     super.onInit();
   }
   //page events
@@ -118,5 +128,16 @@ class HomeController extends GetxController {
   void selectCategory(Category category) {
     selectedCategory = category;
     getProductsByCategory(category.id!);
+  }
+
+  //get profile
+
+  void getProfile() async {
+    try {
+      final response = await usersRepository.getProfile();
+      LoggerService().infoLog(response.data.toString());
+    } catch (e) {
+      LoggerService().errorLog(e.toString());
+    }
   }
 }

@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:indiabana_app/app/data/network/api/constants/endpoints.dart';
+
+import '../../shared/constants/constants.dart';
 
 class DioClient {
   // dio instance
@@ -25,9 +28,11 @@ class DioClient {
         InterceptorsWrapper(
           onRequest: (options, handler) {
             // Add the access token to the request header
-            // if (controller.token != '') {
-            //   options.headers['Authorization'] = 'Bearer ${controller.token}';
-            // }
+            final box = GetStorage();
+            final token = box.read(AppConstants.TOKEN_KEY);
+            if (token != null && token != '') {
+              options.headers['Authorization'] = 'Bearer ${token}';
+            }
             return handler.next(options);
           },
         )

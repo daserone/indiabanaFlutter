@@ -45,7 +45,7 @@ class CommonDrawer extends StatelessWidget {
                               child: Text(
                                 controller.token == ''
                                     ? 'Bienvenido a Indiabana'
-                                    : controller.token ?? '',
+                                    : 'Bienvenido ${controller.profileUser?.name ?? ''}',
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
@@ -58,9 +58,13 @@ class CommonDrawer extends StatelessWidget {
                     ),
                   ),
                   controller.token != ''
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
-                          child: ProfilePic(),
+                          left: 10,
+                          child: ProfilePic(
+                            imageUrl:
+                                controller.profileUser?.profileImage ?? '',
+                          ),
                         )
                       : Container()
                 ],
@@ -95,12 +99,15 @@ class CommonDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Text('Cuenta'),
+              title: Text(
+                controller.token == '' ? 'Iniciar Sesión' : 'Cerrar Sesión',
+              ),
               onTap: () {
                 // Update the state of the app.
                 // ...
-                Get.back();
-                Get.toNamed('login');
+                controller.token == ''
+                    ? Get.toNamed('login')
+                    : controller.deleteUser();
               },
             ),
             ListTile(

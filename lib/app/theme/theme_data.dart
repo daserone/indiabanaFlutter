@@ -33,6 +33,7 @@ class ThemeConfig {
       inputDecorationTheme: InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         hintStyle: const TextStyle(color: Colors.grey),
+        suffixIconColor: ColorConstants.indiabanaDarkBlue,
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),
