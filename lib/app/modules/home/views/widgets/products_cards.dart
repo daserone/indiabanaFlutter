@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/data/models/response/products_cat_response.dart';
 import 'package:indiabana_app/app/modules/home/controllers/home_controller.dart';
+import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 
 class ProductsCards extends StatelessWidget {
   const ProductsCards({super.key});
@@ -111,7 +112,16 @@ class ProductsCards extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.bottomCenter,
                                   child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        LoggerService().infoLog(
+                                            product.toJson().toString());
+                                        final Map<String, dynamic> arguments = {
+                                          'id': product.id,
+                                          'product': product,
+                                        };
+                                        Get.toNamed('product-details',
+                                            arguments: arguments);
+                                      },
                                       child: SizedBox(
                                         width: Get.width,
                                         child: const Center(
