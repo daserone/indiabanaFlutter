@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePic extends StatelessWidget {
@@ -11,7 +12,7 @@ class ProfilePic extends StatelessWidget {
       radius: 30,
       //profile pic or asset logo
       backgroundImage: imageUrl != null
-          ? NetworkImage(
+          ? CachedNetworkImageProvider(
               imageUrl!,
             )
           : const AssetImage('assets/icons/logo.png') as ImageProvider,

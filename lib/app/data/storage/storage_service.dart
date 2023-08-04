@@ -10,7 +10,11 @@ import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 
 class AuthenticationManager extends GetxService with CacheManager {
   final usersRepository = getIt.get<UsersRepository>();
-
+  // tab index
+  RxInt _tabIndex = 0.obs;
+  //getters and setters
+  int? get tabIndex => _tabIndex.value;
+  set tabIndex(int? value) => _tabIndex.value = value!;
   RxString _token = ''.obs;
   //getters and setters
   String? get token => _token.value;
@@ -63,5 +67,10 @@ class AuthenticationManager extends GetxService with CacheManager {
     } catch (e) {
       LoggerService().errorLog(e.toString());
     }
+  }
+
+  //change tab index
+  void changeTabIndex(int index) {
+    tabIndex = index;
   }
 }
