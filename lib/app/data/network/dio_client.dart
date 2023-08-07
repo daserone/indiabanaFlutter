@@ -31,7 +31,7 @@ class DioClient {
             final box = GetStorage();
             final token = box.read(AppConstants.TOKEN_KEY);
             if (token != null && token != '') {
-              options.headers['Authorization'] = 'Bearer ${token}';
+              options.headers['Authorization'] = 'Bearer $token';
             }
             return handler.next(options);
           },

@@ -78,7 +78,7 @@ class HomeController extends GetxController {
   void bottomTapped(int index) {
     currentPage = index;
     pageController.animateToPage(index,
-        duration: Duration(milliseconds: 500), curve: Curves.ease);
+        duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   void getCategories() async {

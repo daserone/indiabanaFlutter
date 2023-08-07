@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   //repository
   final AuthRepository _authRepository = getIt.get<AuthRepository>();
   // login or register
-  RxBool _isLogin = true.obs;
+  final RxBool _isLogin = true.obs;
   bool get isLogin => _isLogin.value;
   set isLogin(bool value) => _isLogin.value = value;
   final _formKey = GlobalKey<FormState>();
@@ -22,7 +22,7 @@ class LoginController extends GetxController {
   TextEditingController nameController = TextEditingController();
 
   //password show
-  RxBool _passwordShow = false.obs;
+  final RxBool _passwordShow = false.obs;
   bool get passwordShow => _passwordShow.value;
   set passwordShow(bool value) => _passwordShow.value = value;
 

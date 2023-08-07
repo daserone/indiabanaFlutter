@@ -18,7 +18,8 @@ class SelectedCategoryProducts extends StatelessWidget {
                 children: [
                   Text(
                     controller.selectedCategory.name ?? '',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const Spacer(),
                   TextButton(

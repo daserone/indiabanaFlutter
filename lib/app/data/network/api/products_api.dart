@@ -15,4 +15,37 @@ class ProductsApi {
       rethrow;
     }
   }
+
+  //product by id
+  Future<Response> getProductById(String id) async {
+    try {
+      final Response response = await dioClient.get('/get-stock?id=$id');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //related products
+  Future<Response> getRelatedProducts(String id) async {
+    try {
+      final Response response = await dioClient.get('/related_products?id=$id');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // add question to product
+  Future<Response> addQuestionToProduct(FormData form) async {
+    try {
+      final Response response = await dioClient.post(
+        '/product/create-question',
+        data: form,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

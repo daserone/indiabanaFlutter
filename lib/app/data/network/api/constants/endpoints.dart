@@ -2,7 +2,7 @@ class Endpoints {
   Endpoints._();
 
   // base url
-  static const String baseUrl = "https://api.indiabana.com/";
+  static const String baseUrl = "https://api.indiabana.com";
 
   // receiveTimeout
   static const int receiveTimeout = 15000;
