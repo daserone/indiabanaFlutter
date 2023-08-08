@@ -50,8 +50,7 @@ class DrawerItemsSeller extends StatelessWidget {
             'Publicar',
           ),
           onTap: () {
-            // Update the state of the app.
-            // ...
+            Get.toNamed('new-product');
           },
         ),
         //billing
