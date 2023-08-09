@@ -13,8 +13,15 @@ class NewProductWarrantyRadio extends StatelessWidget {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           const Text(
             'Garantía del producto',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           //radio condition list tile
           ListTile(
@@ -47,9 +54,16 @@ class NewProductWarrantyRadio extends StatelessWidget {
               },
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           if (controller.productWarranty != 2)
             const Text(
               'Tiempo de garantía',
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
             ),
 
           if (controller.productWarranty != 2)
@@ -124,7 +138,43 @@ class NewProductWarrantyRadio extends StatelessWidget {
                   ),
                 )
               ],
-            )
+            ),
+          const SizedBox(
+            height: 20,
+          ),
+          // cancel and next buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (controller.formKey.currentState!.validate()) {
+                    controller.nextStep();
+                  }
+                },
+                child: const Text(
+                  'Siguiente',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              TextButton(
+                onPressed: () {
+                  controller.previousStep();
+                },
+                child: Text(
+                  'Atrás',
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

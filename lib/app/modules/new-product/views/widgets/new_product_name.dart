@@ -13,6 +13,10 @@ class NewProductName extends StatelessWidget {
       children: [
         const Text(
           '¿Que estas vendiendo?',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         TextFormField(
           controller: controller.nameProductController,
@@ -25,6 +29,42 @@ class NewProductName extends StatelessWidget {
             }
             return null;
           },
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        // cancel and next buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                if (controller.formKey.currentState!.validate()) {
+                  controller.nextStep();
+                }
+              },
+              child: const Text(
+                'Siguiente',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            TextButton(
+              onPressed: () {
+                // controller.cancel();
+              },
+              child: Text(
+                'Cancelar',
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

@@ -54,6 +54,9 @@ class ThemeConfig {
         ),
         radioTheme: RadioThemeData(
           fillColor: MaterialStateProperty.all(ColorConstants.indiabanaOrange),
+        ),
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.all(ColorConstants.indiabanaOrange),
         ));
   }
 

@@ -11,6 +11,13 @@ class NewProductData extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Text(
+          'Datos del producto',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         TextFormField(
           controller: controller.brandProductController,
           decoration: const InputDecoration(
@@ -48,7 +55,7 @@ class NewProductData extends StatelessWidget {
             return null;
           },
         ),
-        //ficha tecnica
+        //ficha técnica
         TextFormField(
           controller: controller.technicalSheetProductController,
           decoration: const InputDecoration(
@@ -112,6 +119,42 @@ class NewProductData extends StatelessWidget {
             }
             return null;
           },
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        // cancel and next buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                if (controller.formKey.currentState!.validate()) {
+                  controller.nextStep();
+                }
+              },
+              child: const Text(
+                'Siguiente',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            TextButton(
+              onPressed: () {
+                controller.previousStep();
+              },
+              child: Text(
+                'Atrás',
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

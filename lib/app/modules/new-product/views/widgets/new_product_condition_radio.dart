@@ -14,6 +14,10 @@ class NewProductConditionRadio extends StatelessWidget {
         children: [
           const Text(
             'Condición del producto',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           //radio condition list tile
           ListTile(

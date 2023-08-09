@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_stepper.dart';
+import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_stepper_header.dart';
 
 import '../controllers/new_product_controller.dart';
 
@@ -15,7 +16,8 @@ class NewProductView extends GetView<NewProductController> {
         centerTitle: true,
       ),
       body: ListView(
-        children: const [
+        children: [
+          NewProductStepperHeader(),
           NewProductStepper(),
         ],
       ),
