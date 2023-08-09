@@ -3,12 +3,15 @@
     "appbar",
     "ARGB",
     "autofocus",
+    "estandar",
     "Getx",
     "indiabana",
     "Indiabana",
     "LTRB",
     "pageview",
     "Reacondicionado",
+    "textcontrollers",
+    "textfields",
     "vsync"
   ]
 }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:indiabana_app/app/data/models/pub_type.dart';
 import 'package:indiabana_app/app/data/models/shipping_list.dart';
 import 'package:indiabana_app/app/data/models/shipping_method.dart';
+import 'package:indiabana_app/app/shared/utils/image_picker.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 class NewProductController extends GetxController {
   //stepper index
-  RxInt _currentStep = 0.obs;
+  final RxInt _currentStep = 0.obs;
   int get currentStep => _currentStep.value;
   set currentStep(int value) => _currentStep.value = value;
   //scroll controller
@@ -18,7 +21,6 @@ class NewProductController extends GetxController {
     'Condición',
     'Envíos',
     'Datos y Galería',
-    'Fotos',
     'Precio e Inventario',
     'Publicar'
   ];
@@ -32,8 +34,8 @@ class NewProductController extends GetxController {
   //modelo
   TextEditingController modelProductController = TextEditingController();
   //sku
-  TextEditingController skuProductController = TextEditingController();
-  //ficha tecnica
+  TextEditingController codeProductController = TextEditingController();
+  //ficha técnica
   TextEditingController technicalSheetProductController =
       TextEditingController();
   //peso
@@ -52,24 +54,47 @@ class NewProductController extends GetxController {
   //shipping company
   TextEditingController shippingCompanyProductController =
       TextEditingController();
-  //shipping price
+  //shipping
   TextEditingController shippingPriceProductController =
       TextEditingController();
+  //price
+  TextEditingController priceProductController = TextEditingController();
+  //inventory
+  TextEditingController inventoryProductController = TextEditingController();
+  //sku
+  TextEditingController skuProductController = TextEditingController();
+  //discount
+  TextEditingController discountProductController = TextEditingController();
+  //discount from to
+  TextEditingController discountFromProductController = TextEditingController();
+  TextEditingController discountToProductController = TextEditingController();
+
+  //discount radio
+  final RxInt _discountRadio = 0.obs;
+  int get discountRadio => _discountRadio.value;
+  set discountRadio(int value) => _discountRadio.value = value;
+
   //radio product condition
-  RxInt _productCondition = 0.obs;
+  final RxInt _productCondition = 0.obs;
   int get productCondition => _productCondition.value;
   set productCondition(int value) => _productCondition.value = value;
   //radio product warranty
-  RxInt _productWarranty = 0.obs;
+  final RxInt _productWarranty = 0.obs;
   int get productWarranty => _productWarranty.value;
   set productWarranty(int value) => _productWarranty.value = value;
-  //change step
-  void changeStep(int index) {
-    currentStep = index;
-  }
+
+  //image picker files empty
+  final RxList<XFile> _multipleImages = <XFile>[
+    XFile(''),
+    XFile(''),
+    XFile(''),
+    XFile(''),
+  ].obs;
+  List<XFile> get multipleImages => _multipleImages;
+  set multipleImages(List<XFile> value) => _multipleImages.value = value;
 
   //list shipping methods
-  RxList<ShippingMethods> _shippingMethods = <ShippingMethods>[
+  final RxList<ShippingMethods> _shippingMethods = <ShippingMethods>[
     ShippingMethods(method: 'ICarry', checked: false),
     ShippingMethods(method: 'Retiro en tienda', checked: false),
     ShippingMethods(method: 'Otros', checked: false),
@@ -78,13 +103,51 @@ class NewProductController extends GetxController {
   set shippingMethods(List<ShippingMethods> value) =>
       _shippingMethods.value = value;
   //radio shipping expenses
-  RxInt _shippingExpenses = 0.obs;
+  final RxInt _shippingExpenses = 0.obs;
   int get shippingExpenses => _shippingExpenses.value;
   set shippingExpenses(int value) => _shippingExpenses.value = value;
   //shipping list
-  RxList<Shipping> _shippingList = <Shipping>[].obs;
+  final RxList<Shipping> _shippingList = <Shipping>[].obs;
   List<Shipping> get shippingList => _shippingList;
   set shippingList(List<Shipping> value) => _shippingList.value = value;
+
+  // pub type list NewProductPubTypes
+  final RxList<NewProductPubTypes> _pubTypeList = <NewProductPubTypes>[
+    NewProductPubTypes(
+        type: 'assets/images/gratuita.png',
+        duration: '60 días',
+        exposure: 'Baja exposición',
+        sales: 'No acumula ventas ni visualización',
+        stock: 'Stock limitado(1 unidad)',
+        commissions: 'Sin comisiones por venta'),
+    NewProductPubTypes(
+        type: 'assets/images/estandar.png',
+        duration: '60 días',
+        exposure: 'Alta exposición',
+        sales: 'Acumula ventas y visualización',
+        stock: 'Stock ilimitado',
+        commissions: 'Comisión por venta 5%'),
+    NewProductPubTypes(
+        type: 'assets/images/gold.png',
+        duration: '60 días',
+        exposure: 'Alta exposición',
+        sales: 'Acumula ventas y visualización',
+        stock: 'Stock ilimitado',
+        commissions: 'Comisión por venta 5%'),
+    NewProductPubTypes(
+        type: 'assets/images/destacado.png',
+        duration: '60 días',
+        exposure: 'Alta exposición',
+        sales: 'Acumula ventas y visualización',
+        stock: 'Stock ilimitado',
+        commissions: 'Comisión por venta 5%')
+  ].obs;
+  List<NewProductPubTypes> get pubTypeList => _pubTypeList;
+  set pubTypeList(List<NewProductPubTypes> value) => _pubTypeList.value = value;
+  //selected
+  final RxInt _selectedPubType = 0.obs;
+  int get selectedPubType => _selectedPubType.value;
+  set selectedPubType(int value) => _selectedPubType.value = value;
 
   //next step
   void nextStep() {
@@ -99,6 +162,11 @@ class NewProductController extends GetxController {
     if (currentStep > 0) {
       currentStep--;
     }
+  }
+
+  //change step
+  void changeStep(int index) {
+    currentStep = index;
   }
 
   //change check shipping methods
@@ -131,5 +199,36 @@ class NewProductController extends GetxController {
   void deleteFromShippingList(int index) {
     shippingList.removeAt(index);
     _shippingList.refresh();
+  }
+
+  //void get image from camera
+  void getImageFromCamera(int index) async {
+    final image = await pickerImageCamera();
+    if (image != null) {
+      multipleImages[index] = image;
+      _multipleImages.refresh();
+    }
+  }
+  //get image from gallery
+
+  void getImageFromGallery(int index) async {
+    final image = await pickerImageGallery();
+    if (image != null) {
+      //at specific index
+      multipleImages[index] = image;
+
+      _multipleImages.refresh();
+    }
+  }
+
+  //delete image
+  void deleteImage(int index) {
+    multipleImages[index] = XFile('');
+    _multipleImages.refresh();
+  }
+
+  //change selected
+  void changeSelected(int index) {
+    selectedPubType = index;
   }
 }

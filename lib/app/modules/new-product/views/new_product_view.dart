@@ -16,7 +16,7 @@ class NewProductView extends GetView<NewProductController> {
         centerTitle: true,
       ),
       body: ListView(
-        children: [
+        children: const [
           NewProductStepperHeader(),
           NewProductStepper(),
         ],
