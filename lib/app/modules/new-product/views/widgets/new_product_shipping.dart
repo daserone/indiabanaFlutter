@@ -21,7 +21,7 @@ class NewProductShipping extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 200,
+            height: 170,
             child: ListView.builder(
                 itemCount: controller.shippingMethods.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -34,7 +34,18 @@ class NewProductShipping extends StatelessWidget {
                   );
                 }),
           ),
-
+          if (controller.shippingError)
+            const Text(
+              'Selecciona al menos un método de envió',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          const SizedBox(
+            height: 20,
+          ),
           const Text(
             'Gastos de envió',
             style: TextStyle(
@@ -124,6 +135,19 @@ class NewProductShipping extends StatelessWidget {
                     ),
                   );
                 },
+              ),
+            ),
+
+          const SizedBox(
+            height: 20,
+          ),
+          if (controller.shippingError)
+            const Text(
+              'Agrega al menos un gasto de envió',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
 

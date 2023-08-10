@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_category.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_condition.dart';
+import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_data.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_desc.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_name.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_price.dart';
@@ -25,14 +26,16 @@ class NewProductStepper extends StatelessWidget {
                 : controller.currentStep == 1
                     ? const NewProductCategory()
                     : controller.currentStep == 2
-                        ? const NewProductCondition()
+                        ? const NewProductData()
                         : controller.currentStep == 3
-                            ? const NewProductShipping()
+                            ? const NewProductCondition()
                             : controller.currentStep == 4
-                                ? const NewProductDesc()
+                                ? const NewProductShipping()
                                 : controller.currentStep == 5
-                                    ? const NewProductPrice()
-                                    : const NewProductPublish()),
+                                    ? const NewProductDesc()
+                                    : controller.currentStep == 6
+                                        ? const NewProductPrice()
+                                        : const NewProductPublish()),
       ),
     );
   }

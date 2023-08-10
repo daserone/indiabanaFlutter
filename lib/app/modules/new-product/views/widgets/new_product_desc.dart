@@ -26,13 +26,28 @@ class NewProductDesc extends StatelessWidget {
               height: 170,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: controller.multipleImages.length,
+                itemCount: controller.productImages.length,
                 itemBuilder: (context, index) {
-                  return controller.multipleImages[index].path != ''
+                  return controller.productImages[index].path != ''
                       ? fileImageProduct(context, controller, index)
                       : addImageProduct(context, controller, index);
                 },
               ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            if (controller.imagesError)
+              const Text(
+                'Selecciona al menos una imagen',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            const SizedBox(
+              height: 20,
             ),
             const Text(
               'Descripción del producto',
@@ -48,6 +63,13 @@ class NewProductDesc extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               maxLines: 5,
+              controller: controller.descriptionProductController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Ingresa una descripción';
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 20,

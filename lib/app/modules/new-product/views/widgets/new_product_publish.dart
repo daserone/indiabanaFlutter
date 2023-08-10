@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
+import 'package:indiabana_app/app/modules/new-product/views/widgets/form_nav_buttons.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_post_type_card.dart';
 
 class NewProductPublish extends StatelessWidget {
@@ -32,21 +33,7 @@ class NewProductPublish extends StatelessWidget {
                       )),
             )),
         const SizedBox(height: 10.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                controller.currentStep = 0;
-              },
-              child: const Text('Editar'),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Publicar'),
-            ),
-          ],
-        ),
+        const FormNavButtons()
       ],
     );
   }

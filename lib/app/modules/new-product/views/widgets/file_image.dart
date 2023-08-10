@@ -20,7 +20,7 @@ Widget fileImageProduct(
           ),
         ),
         child: Image.file(
-          File(controller.multipleImages[index].path),
+          File(controller.productImages[index].path),
           fit: BoxFit.cover,
         ),
       ),

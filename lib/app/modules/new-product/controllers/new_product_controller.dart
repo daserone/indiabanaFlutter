@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:indiabana_app/app/data/models/pub_type.dart';
 import 'package:indiabana_app/app/data/models/shipping_list.dart';
 import 'package:indiabana_app/app/data/models/shipping_method.dart';
+import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 import 'package:indiabana_app/app/shared/utils/image_picker.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -18,6 +19,7 @@ class NewProductController extends GetxController {
   List<String> steps = [
     'Nombre del producto',
     'Categoría',
+    'Ficha técnica',
     'Condición',
     'Envíos',
     'Datos y Galería',
@@ -68,6 +70,8 @@ class NewProductController extends GetxController {
   //discount from to
   TextEditingController discountFromProductController = TextEditingController();
   TextEditingController discountToProductController = TextEditingController();
+  //description
+  TextEditingController descriptionProductController = TextEditingController();
 
   //discount radio
   final RxInt _discountRadio = 0.obs;
@@ -84,14 +88,19 @@ class NewProductController extends GetxController {
   set productWarranty(int value) => _productWarranty.value = value;
 
   //image picker files empty
-  final RxList<XFile> _multipleImages = <XFile>[
+  final RxList<XFile> _productImages = <XFile>[
     XFile(''),
     XFile(''),
     XFile(''),
     XFile(''),
   ].obs;
-  List<XFile> get multipleImages => _multipleImages;
-  set multipleImages(List<XFile> value) => _multipleImages.value = value;
+  List<XFile> get productImages => _productImages;
+  set productImages(List<XFile> value) => _productImages.value = value;
+
+  //images error
+  final RxBool _imagesError = false.obs;
+  bool get imagesError => _imagesError.value;
+  set imagesError(bool value) => _imagesError.value = value;
 
   //list shipping methods
   final RxList<ShippingMethods> _shippingMethods = <ShippingMethods>[
@@ -110,6 +119,14 @@ class NewProductController extends GetxController {
   final RxList<Shipping> _shippingList = <Shipping>[].obs;
   List<Shipping> get shippingList => _shippingList;
   set shippingList(List<Shipping> value) => _shippingList.value = value;
+  //shipping error
+  final RxBool _shippingError = false.obs;
+  bool get shippingError => _shippingError.value;
+  set shippingError(bool value) => _shippingError.value = value;
+  //shipping list error
+  final RxBool _shippingListError = false.obs;
+  bool get shippingListError => _shippingListError.value;
+  set shippingListError(bool value) => _shippingListError.value = value;
 
   // pub type list NewProductPubTypes
   final RxList<NewProductPubTypes> _pubTypeList = <NewProductPubTypes>[
@@ -205,8 +222,8 @@ class NewProductController extends GetxController {
   void getImageFromCamera(int index) async {
     final image = await pickerImageCamera();
     if (image != null) {
-      multipleImages[index] = image;
-      _multipleImages.refresh();
+      productImages[index] = image;
+      _productImages.refresh();
     }
   }
   //get image from gallery
@@ -215,20 +232,26 @@ class NewProductController extends GetxController {
     final image = await pickerImageGallery();
     if (image != null) {
       //at specific index
-      multipleImages[index] = image;
+      productImages[index] = image;
 
-      _multipleImages.refresh();
+      _productImages.refresh();
     }
   }
 
   //delete image
   void deleteImage(int index) {
-    multipleImages[index] = XFile('');
-    _multipleImages.refresh();
+    productImages[index] = XFile('');
+    _productImages.refresh();
   }
 
   //change selected
   void changeSelected(int index) {
     selectedPubType = index;
+  }
+
+  //publish product
+
+  void publishProduct() {
+    LoggerService().infoLog('PUBLISH');
   }
 }

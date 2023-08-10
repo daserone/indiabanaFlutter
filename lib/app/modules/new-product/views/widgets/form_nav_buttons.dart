@@ -14,11 +14,45 @@ class FormNavButtons extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             if (controller.formKey.currentState!.validate()) {
+              if (controller.currentStep == 4) {
+                //check if at least one shipping methods is checked
+                if (controller.shippingMethods
+                    .where((element) => element.checked!)
+                    .isEmpty) {
+                  controller.shippingError = true;
+                  return;
+                } else {
+                  controller.shippingError = false;
+                }
+                if (controller.shippingList.isEmpty) {
+                  controller.shippingListError = true;
+                  return;
+                } else {
+                  controller.shippingListError = false;
+                }
+              }
+              if (controller.currentStep == 5) {
+                //check if at least one product image has path
+                if (controller.productImages
+                    .where((element) => element.path != '')
+                    .isEmpty) {
+                  controller.imagesError = true;
+                  return;
+                } else {
+                  controller.imagesError = false;
+                }
+              }
+              if (controller.currentStep == 7) {
+                //publish
+                controller.publishProduct();
+                return;
+              }
+
               controller.nextStep();
             }
           },
-          child: const Text(
-            'Siguiente',
+          child: Text(
+            controller.currentStep != 7 ? 'Siguiente' : 'Publicar',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
