@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/form_nav_buttons.dart';
+import 'package:flutter/services.dart';
 
 class NewProductShipping extends StatelessWidget {
   const NewProductShipping({super.key});
@@ -102,6 +103,10 @@ class NewProductShipping extends StatelessWidget {
                       labelText: 'Precio de envió',
                       hintText: 'Precio de envió',
                     ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                   ),
                 ),
                 IconButton(
@@ -111,7 +116,7 @@ class NewProductShipping extends StatelessWidget {
             ),
           if (controller.shippingList.isNotEmpty)
             Container(
-              height: 200,
+              height: 120,
               margin: const EdgeInsets.all(10),
               decoration: const BoxDecoration(
                 border: Border(
@@ -141,7 +146,7 @@ class NewProductShipping extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          if (controller.shippingError)
+          if (controller.shippingListError)
             const Text(
               'Agrega al menos un gasto de envió',
               style: TextStyle(

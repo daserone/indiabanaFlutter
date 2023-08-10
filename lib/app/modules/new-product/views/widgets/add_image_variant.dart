@@ -3,8 +3,7 @@ import 'package:indiabana_app/app/modules/new-product/controllers/new_product_co
 import 'package:indiabana_app/app/modules/new-product/views/widgets/image_select_bottom_sheet.dart';
 
 @override
-Widget addImageProduct(
-    BuildContext context, NewProductController controller, int index) {
+Widget addImageVariant(BuildContext context, NewProductController controller) {
   return Container(
     margin: const EdgeInsets.all(5.0),
     width: 170,
@@ -16,6 +15,6 @@ Widget addImageProduct(
         width: 1.0,
       ),
     ),
-    child: imageSelect(context, controller, index, false),
+    child: imageSelect(context, controller, 0, true),
   );
 }

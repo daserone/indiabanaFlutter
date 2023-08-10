@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/form_nav_buttons.dart';
+import 'package:flutter/services.dart';
 
 class NewProductData extends StatelessWidget {
   const NewProductData({super.key});
@@ -75,6 +76,8 @@ class NewProductData extends StatelessWidget {
           decoration: const InputDecoration(
             label: Text('Peso'),
           ),
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Por favor ingrese un peso';
@@ -88,6 +91,8 @@ class NewProductData extends StatelessWidget {
           decoration: const InputDecoration(
             label: Text('Dimensiones(altura en cm)'),
           ),
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Por favor ingrese una altura';
@@ -101,6 +106,8 @@ class NewProductData extends StatelessWidget {
           decoration: const InputDecoration(
             label: Text('Dimensiones(ancho en cm)'),
           ),
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Por favor ingrese un ancho';
@@ -114,6 +121,8 @@ class NewProductData extends StatelessWidget {
           decoration: const InputDecoration(
             label: Text('Dimensiones(largo en cm)'),
           ),
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Por favor ingrese un largo';

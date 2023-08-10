@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 
 class NewProductDiscountRadio extends StatelessWidget {
-  const NewProductDiscountRadio({super.key});
+  final bool isVariant;
+  const NewProductDiscountRadio({super.key, required this.isVariant});
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +28,32 @@ class NewProductDiscountRadio extends StatelessWidget {
           ListTile(
             title: const Text('Si'),
             leading: Radio<int>(
-              value: 0,
-              groupValue: controller.discountRadio,
+              value: 1,
+              groupValue: isVariant
+                  ? controller.variantDiscountRadio
+                  : controller.discountRadio,
               onChanged: (value) {
-                controller.discountRadio = value!;
+                if (isVariant) {
+                  controller.variantDiscountRadio = value!;
+                } else {
+                  controller.discountRadio = value!;
+                }
               },
             ),
           ),
           ListTile(
             title: const Text('No'),
             leading: Radio<int>(
-              value: 1,
-              groupValue: controller.discountRadio,
+              value: 0,
+              groupValue: isVariant
+                  ? controller.variantDiscountRadio
+                  : controller.discountRadio,
               onChanged: (value) {
-                controller.discountRadio = value!;
+                if (isVariant) {
+                  controller.variantDiscountRadio = value!;
+                } else {
+                  controller.discountRadio = value!;
+                }
               },
             ),
           ),

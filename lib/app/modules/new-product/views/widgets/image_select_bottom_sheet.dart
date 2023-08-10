@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 
 @override
-Widget imageSelect(
-    BuildContext context, NewProductController controller, int index) {
+Widget imageSelect(BuildContext context, NewProductController controller,
+    int index, bool isVariant) {
   return IconButton(
     onPressed: () {
       showModalBottomSheet(
@@ -18,7 +18,7 @@ Widget imageSelect(
                   leading: const Icon(Icons.camera),
                   title: const Text('Cámara'),
                   onTap: () async {
-                    controller.getImageFromCamera(index);
+                    controller.getImageFromCamera(index, isVariant);
                     Get.back();
                   },
                 ),
@@ -26,7 +26,7 @@ Widget imageSelect(
                   leading: const Icon(Icons.image),
                   title: const Text('Galería'),
                   onTap: () async {
-                    controller.getImageFromGallery(index);
+                    controller.getImageFromGallery(index, isVariant);
                     Get.back();
                   },
                 ),

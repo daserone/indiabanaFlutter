@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:indiabana_app/app/data/network/dio_client.dart';
+import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 
 class ProductsApi {
   final DioClient dioClient;
@@ -41,6 +42,33 @@ class ProductsApi {
     try {
       final Response response = await dioClient.post(
         '/product/create-question',
+        data: form,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //create product
+  Future<Response> createProduct(FormData form) async {
+    try {
+      final Response response = await dioClient.post(
+        '/create-product',
+        data: form,
+      );
+      LoggerService().infoLog(response.toString());
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //create publication
+  Future<Response> createPublication(FormData form) async {
+    try {
+      final Response response = await dioClient.post(
+        '/publishment',
         data: form,
       );
       return response;

@@ -16,6 +16,7 @@ class FormNavButtons extends StatelessWidget {
             if (controller.formKey.currentState!.validate()) {
               if (controller.currentStep == 4) {
                 //check if at least one shipping methods is checked
+
                 if (controller.shippingMethods
                     .where((element) => element.checked!)
                     .isEmpty) {
@@ -24,11 +25,13 @@ class FormNavButtons extends StatelessWidget {
                 } else {
                   controller.shippingError = false;
                 }
-                if (controller.shippingList.isEmpty) {
-                  controller.shippingListError = true;
-                  return;
-                } else {
-                  controller.shippingListError = false;
+                if (controller.shippingExpenses != 0) {
+                  if (controller.shippingList.isEmpty) {
+                    controller.shippingListError = true;
+                    return;
+                  } else {
+                    controller.shippingListError = false;
+                  }
                 }
               }
               if (controller.currentStep == 5) {

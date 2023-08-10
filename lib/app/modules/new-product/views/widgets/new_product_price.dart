@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/form_nav_buttons.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_discount_radio.dart';
+import 'package:indiabana_app/app/modules/new-product/views/widgets/new_product_variants.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
+import 'package:flutter/services.dart';
 
 class NewProductPrice extends StatelessWidget {
   const NewProductPrice({super.key});
@@ -27,6 +31,10 @@ class NewProductPrice extends StatelessWidget {
             decoration: const InputDecoration(
               label: Text('Precio de venta'),
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese un precio';
@@ -39,6 +47,10 @@ class NewProductPrice extends StatelessWidget {
             decoration: const InputDecoration(
               label: Text('Inventario'),
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese una cantidad';
@@ -60,8 +72,10 @@ class NewProductPrice extends StatelessWidget {
             },
           ),
           //discount radio
-          const NewProductDiscountRadio(),
-          if (controller.discountRadio == 0)
+          const NewProductDiscountRadio(
+            isVariant: false,
+          ),
+          if (controller.discountRadio == 1)
             Column(
               children: [
                 TextFormField(
@@ -69,6 +83,10 @@ class NewProductPrice extends StatelessWidget {
                   decoration: const InputDecoration(
                     label: Text('Precio con descuento'),
                   ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor ingrese un descuento';
@@ -193,6 +211,85 @@ class NewProductPrice extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          //variants
+          const Text(
+            '¿Tiene Variantes?',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          //ejemplo talla,color, etc
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Ejemplo: Talla, Color, etc'),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorConstants.indiabanaDarkBlue),
+                  onPressed: () {
+                    showGeneralDialog(
+                      context: context,
+                      barrierColor: Colors.white, // Background color
+                      barrierDismissible: false,
+                      barrierLabel: 'Dialog',
+                      transitionDuration: Duration(milliseconds: 400),
+                      pageBuilder: (_, __, ___) {
+                        return const NewProductVariant();
+                      },
+                    );
+                  },
+                  child: Text('Agregar Variante'))
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          //variants list
+          if (controller.variantFormDataList.isNotEmpty)
+            Column(
+              children: [
+                const Text(
+                  'Variantes',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.variantFormDataList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                        leading: Image.file(
+                          File(controller
+                                  .variantFormDataList[index].images?.path ??
+                              ''),
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(
+                            controller.variantFormDataList[index].name ?? ''),
+                        trailing: IconButton(
+                            onPressed: () {
+                              controller.removeVariant(index);
+                            },
+                            icon: const Icon(Icons.delete)));
+                  },
+                ),
+              ],
+            ),
+          const SizedBox(
+            height: 10,
+          ),
+
           // cancel and next buttons
           const FormNavButtons()
         ],

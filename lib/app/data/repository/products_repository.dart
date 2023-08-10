@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:indiabana_app/app/data/models/response/product_new_publication_response.dart';
+import 'package:indiabana_app/app/data/models/response/product_new_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_cat_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_related_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_stock_response.dart';
@@ -64,6 +66,29 @@ class ProductsRepository {
       });
       final response = await productsApi.addQuestionToProduct(form);
       return response;
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
+
+  //create product
+  Future<NewProductResponse> createProduct(FormData form) async {
+    try {
+      final response = await productsApi.createProduct(form);
+      return NewProductResponse.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
+
+  //create publication
+  Future<NewPublicationResponse> createPublication(FormData form) async {
+    try {
+      final response = await productsApi.createPublication(form);
+      return NewPublicationResponse.fromJson(
+          response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

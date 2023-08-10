@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/new-product/controllers/new_product_controller.dart';
 import 'package:indiabana_app/app/modules/new-product/views/widgets/form_nav_buttons.dart';
-import 'package:indiabana_app/app/shared/constants/constants.dart';
+// import 'package:indiabana_app/app/shared/constants/constants.dart';
+import 'package:flutter/services.dart';
 
 class NewProductWarrantyRadio extends StatelessWidget {
   const NewProductWarrantyRadio({super.key});
@@ -81,6 +82,8 @@ class NewProductWarrantyRadio extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Tiempo de garantía',
                     ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese un tiempo de garantía';
@@ -96,14 +99,14 @@ class NewProductWarrantyRadio extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: ColorConstants.indiabanaDarkBlue,
+                    // color: ColorConstants.indiabanaDarkBlue,
                   ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   width: Get.width / 5,
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.black,
                       hintText: 'Dias',
                     ),
                     onChanged: (String? newValue) {
@@ -112,15 +115,15 @@ class NewProductWarrantyRadio extends StatelessWidget {
                     selectedItemBuilder: (context) => <Widget>[
                       const Text(
                         'Días',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                       const Text(
                         'Meses',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                       const Text(
                         'Años',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ],
                     value: controller.warrantyTypeProductController.text == ''
