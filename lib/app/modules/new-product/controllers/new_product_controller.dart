@@ -294,11 +294,13 @@ class NewProductController extends GetxController {
       final response = await productsRepository.createProduct(form);
 
       //create pub
-      LoggerService().infoLog('PUBLISH 0 ${response.type}');
+      LoggerService().infoLog('PRODUCT ${response.type}');
 
       if (response.type == 'success') {
-        LoggerService().infoLog('PUBLISH 0 ${response.data!.product!.id!}');
-
+        LoggerService().infoLog('PRODUCT ${response.data!.stock!.id!}');
+        if (variantFormDataList.isNotEmpty) {
+          await createVariants(response.data!.stock!.id!);
+        }
         await createPublication(response.data!.stock!.id!);
       }
     } catch (e) {
@@ -306,8 +308,52 @@ class NewProductController extends GetxController {
     }
   }
 
-  Future<void> createPublication(String stockId) async {
-    LoggerService().infoLog('PUBLISH 1');
+  Future<void> createVariants(String stockId) async {
+    try {
+      List<bool> respList = await futureList(stockId);
+      LoggerService().infoLog('VARIANTS RESPONSE $respList');
+
+      if (respList.contains(false)) {
+        Get.snackbar('Error', 'Ocurrió un error al crear las variantes',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return;
+      } else {
+        createPublication(stockId);
+      }
+    } catch (e) {
+      LoggerService().errorLog(e.toString());
+    }
+  }
+
+  Future<List<bool>> futureList(stockId) async {
+    List<bool> variantResp = [];
+
+    for (var variant in variantFormDataList) {
+      final form = await createFormVariant(
+        stockId: stockId,
+        variantName: variant.name ?? '',
+        variantPrice: variant.price ?? '',
+        variantQuantity: variant.quantity ?? '',
+        variantImg: variant.images ?? XFile(''),
+        variantValue: variant.value ?? '',
+        variantOnSale: variant.onSale ?? false,
+        variantMainImageIndex: 0,
+        variantFromDiscount: variant.saleStart ?? '',
+        variantToDiscount: variant.saleEnd ?? '',
+        variantDiscount: variant.offerPrice ?? '',
+      );
+      final response = await productsRepository.createVariant(form);
+      variantResp.add(response.data['type'] == 'success');
+    }
+    return Future.value(variantResp);
+  }
+
+  Future<void> createPublication(
+    String stockId,
+  ) async {
+    LoggerService().infoLog('PUBLISH');
 
     try {
       final form = await crateFormPublication(stockId);
@@ -315,6 +361,10 @@ class NewProductController extends GetxController {
       final response = await productsRepository.createPublication(form);
 
       if (response.type == 'success') {
+        Get.snackbar('Éxito', 'Producto publicado correctamente',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
         Get.offAllNamed(Routes.HOME);
       }
     } catch (e) {
@@ -338,7 +388,9 @@ class NewProductController extends GetxController {
       'name': nameProductController.text,
       'price': priceProductController.text,
       'brand': brandProductController.text,
-      'offer_price': discountProductController.text,
+      'offer_price': discountProductController.text == ''
+          ? '1'
+          : discountProductController.text,
       'category_id': categoryProductController.text,
       'subcategory1_id': '',
       'subcategory2_id': '',
@@ -370,27 +422,31 @@ class NewProductController extends GetxController {
           : 'por cuenta del comprador',
       'on_sale': discountRadio == 1,
       'sku': skuProductController.text,
-      'sale_startime': discountFromProductController.text,
-      'sale_endtime': discountToProductController.text,
+      'sale_startime': discountFromProductController.text == ''
+          ? '2021-09-01'
+          : discountFromProductController.text,
+      'sale_endtime': discountToProductController.text == ''
+          ? '2021-09-01'
+          : discountToProductController.text,
       'main_image_index': 0,
       'images': await getMultipartsFiles()
     });
     return formData;
   }
 
-  Future<dio.FormData> createFormVariant(
-    String stockId,
-    String variantName,
-    String variantValue,
-    String variantPrice,
-    String variantQuantity,
-    bool variantOnSale,
-    int variantMainImageIndex,
-    XFile variantImg,
-    String variantFromDiscount,
-    String variantToDiscount,
-    String variantDiscount,
-  ) async {
+  Future<dio.FormData> createFormVariant({
+    required String stockId,
+    required String variantName,
+    required String variantValue,
+    required String variantPrice,
+    required String variantQuantity,
+    required bool variantOnSale,
+    required int variantMainImageIndex,
+    required XFile variantImg,
+    required String variantFromDiscount,
+    required String variantToDiscount,
+    required String variantDiscount,
+  }) async {
     final formData = dio.FormData.fromMap({
       'stock': stockId,
       'name': variantName,
@@ -399,10 +455,12 @@ class NewProductController extends GetxController {
       'quantity': variantQuantity,
       'on_sale': variantOnSale,
       'main_image_index': 0,
-      ' sale_startime': variantFromDiscount,
-      'sale_endtime': variantToDiscount,
-      'offer_price': variantDiscount,
-      'images': [await getVariantMultipartFile(variantImg)]
+      'sale_startime':
+          variantFromDiscount == '' ? '2021-09-01' : variantFromDiscount,
+      'sale_endtime':
+          variantToDiscount == '' ? '2021-09-01' : variantToDiscount,
+      'offer_price': variantDiscount == '' ? '1' : variantDiscount,
+      'images': await getVariantMultipartFile(variantImg)
     });
     return formData;
   }
@@ -437,11 +495,15 @@ class NewProductController extends GetxController {
   }
 
   //get variant multipart file
-  Future<dio.MultipartFile> getVariantMultipartFile(XFile variantImg) async {
+  Future<List<dio.MultipartFile>> getVariantMultipartFile(
+      XFile variantImg) async {
+    final List<dio.MultipartFile> list = [];
+
     if (variantImg.path != '') {
-      return await dio.MultipartFile.fromFile(variantImg.path);
+      list.add(await dio.MultipartFile.fromFile(variantImg.path));
     }
-    return dio.MultipartFile.fromBytes([], filename: '');
+    LoggerService().infoLog('VARIANT IMG $list');
+    return list;
   }
 
   void addVariant() {

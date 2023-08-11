@@ -6,6 +6,7 @@ import 'package:indiabana_app/app/data/models/response/products_related_response
 import 'package:indiabana_app/app/data/models/response/products_stock_response.dart';
 import 'package:indiabana_app/app/data/network/api/products_api.dart';
 import 'package:indiabana_app/app/data/network/dio_exceptions.dart';
+import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 // import 'package:indiabana_app/app/shared/configs/logger_service.dart';
 
 class ProductsRepository {
@@ -77,6 +78,18 @@ class ProductsRepository {
     try {
       final response = await productsApi.createProduct(form);
       return NewProductResponse.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
+
+  //create variant
+  Future<Response> createVariant(FormData form) async {
+    try {
+      final response = await productsApi.createVariant(form);
+      LoggerService().infoLog('VARIANT: ${response.toString()}');
+      return response;
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

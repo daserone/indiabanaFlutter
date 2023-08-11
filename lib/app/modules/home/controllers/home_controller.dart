@@ -116,7 +116,7 @@ class HomeController extends GetxController {
       final response = await commonRepository.getBanners();
 
       banners = response.data?.files ?? [];
-      LoggerService().infoLog(banners.toString());
+      // LoggerService().infoLog(banners.toString());
     } catch (e) {
       //logger
       LoggerService().errorLog(e.toString());

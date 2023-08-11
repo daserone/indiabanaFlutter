@@ -64,6 +64,20 @@ class ProductsApi {
     }
   }
 
+  //create variant
+  Future<Response> createVariant(FormData form) async {
+    try {
+      final Response response = await dioClient.post(
+        '/variation',
+        data: form,
+      );
+      LoggerService().infoLog(response.toString());
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   //create publication
   Future<Response> createPublication(FormData form) async {
     try {
