@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/data/models/response/products_related_response.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/controllers/product_details_controller.dart';
+import 'package:indiabana_app/app/modules/product-details/controllers/product_details_controller.dart';
 
 class ProductRelatedList extends StatelessWidget {
   const ProductRelatedList({super.key});

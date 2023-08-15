@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/data/models/response/categories_response.dart';
+import 'package:indiabana_app/app/data/models/response/products_all_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_cat_response.dart';
 import 'package:indiabana_app/app/data/repository/categories_repository.dart';
 import 'package:indiabana_app/app/data/repository/common_repository.dart';
@@ -59,6 +60,11 @@ class HomeController extends GetxController {
   bool get loadingProducts => _loadingProducts.value;
   set loadingProducts(bool value) => _loadingProducts.value = value;
 
+  //list products
+  final RxList<Doc> _productSearch = <Doc>[].obs;
+  List<Doc> get productSearch => _productSearch;
+  set productSearch(List<Doc> value) => _productSearch.assignAll(value);
+
   @override
   void onInit() {
     getCategories();
@@ -109,6 +115,33 @@ class HomeController extends GetxController {
       //logger
       LoggerService().errorLog(e.toString());
     }
+  }
+
+  //search
+  Future<List<String>> searchProducts(val) async {
+    try {
+      final response = await productsRepository.getAllProducts(
+          page: 1, limit: 40, searchTerm: val);
+      if (response.type == 'success') {
+        // return string froms producs names
+        productSearch = response.data?.docs ?? [];
+        return response.data?.docs?.map((e) => e.name ?? '').toList() ?? [];
+      } else {
+        return [];
+      }
+    } catch (e) {
+      LoggerService().errorLog(e.toString());
+      return [];
+    }
+  }
+  // get product id with product name
+
+  void getProductId(String name) {
+    final product = productSearch.firstWhere((element) => element.name == name);
+    final Map<String, dynamic> arguments = {
+      'id': product.id,
+    };
+    Get.toNamed('product-details', arguments: arguments);
   }
 
   void getBanners() async {

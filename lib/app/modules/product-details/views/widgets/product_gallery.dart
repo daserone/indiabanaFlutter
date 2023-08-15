@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/controllers/product_details_controller.dart';
+import 'package:indiabana_app/app/modules/product-details/controllers/product_details_controller.dart';
 
 class ProductGallery extends StatelessWidget {
   const ProductGallery({super.key});

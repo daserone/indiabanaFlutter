@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/controllers/product_details_controller.dart';
+import 'package:indiabana_app/app/modules/product-details/controllers/product_details_controller.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});

@@ -1,3 +1,4 @@
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -24,43 +25,34 @@ class HomeView extends GetView<HomeController> {
               children: [
                 const BannerCarousel(),
                 Positioned(
-                    top: 260,
-                    child: SizedBox(
-                      height: 100,
-                      width: Get.width,
-                      child: Center(
-                        child: SizedBox(
-                          width: Get.width - 60,
-                          child: TextFormField(
-                            obscureText: true,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                                hintText: 'Buscar productos...',
-                                hintStyle: const TextStyle(
-                                    fontSize: 16, color: Colors.black45),
-                                fillColor: Colors.white,
-                                filled: true,
-                                suffixIcon: Material(
-                                  elevation: 1.0,
-                                  color: ColorConstants.indiabanaOrange,
-                                  shadowColor: ColorConstants.indiabanaOrange,
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
-                                  ),
-                                  child: const Icon(Icons.search,
-                                      color: Colors.white),
-                                ),
-                                contentPadding: const EdgeInsets.fromLTRB(
-                                    20.0, 10.0, 20.0, 10.0),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 3.0))),
+                  top: Get.height / 3.4,
+                  child: SizedBox(
+                    height: 50,
+                    width: Get.width,
+                    child: Center(
+                      child: SizedBox(
+                        width: Get.width - 60,
+                        child: EasySearchBar(
+                          backgroundColor: Colors.white,
+                          foregroundColor: ColorConstants.indiabanaDarkBlue,
+                          onSearch: (val) {},
+                          title: const Text(
+                            'Buscar productos',
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
                           ),
+                          asyncSuggestions: (val) async =>
+                              await controller.searchProducts(val),
+                          onSuggestionTap: (data) {
+                            controller.getProductId(data);
+                          },
                         ),
                       ),
-                    ))
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/modules/home/controllers/home_controller.dart';
 import 'package:indiabana_app/app/modules/home/views/widgets/products_cards.dart';
+import 'package:indiabana_app/app/routes/app_pages.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
 
 class SelectedCategoryProducts extends StatelessWidget {
@@ -23,7 +24,9 @@ class SelectedCategoryProducts extends StatelessWidget {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.PRODUCTS);
+                    },
                     child: Text(
                       'Ver todos',
                       style: TextStyle(color: ColorConstants.indiabanaOrange),

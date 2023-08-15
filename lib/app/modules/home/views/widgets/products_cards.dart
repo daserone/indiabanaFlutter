@@ -117,7 +117,6 @@ class ProductsCards extends StatelessWidget {
                                             product.toJson().toString());
                                         final Map<String, dynamic> arguments = {
                                           'id': product.id,
-                                          'product': product,
                                         };
                                         Get.toNamed('product-details',
                                             arguments: arguments);

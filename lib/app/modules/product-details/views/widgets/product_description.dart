@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/controllers/product_details_controller.dart';
+import 'package:indiabana_app/app/modules/product-details/controllers/product_details_controller.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
 
 class ProductDescription extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/controllers/product_details_controller.dart';
+import 'package:indiabana_app/app/modules/product-details/controllers/product_details_controller.dart';
 
 class ProductAddQuestion extends StatelessWidget {
   const ProductAddQuestion({super.key});

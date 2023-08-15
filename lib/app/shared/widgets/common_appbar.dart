@@ -1,4 +1,8 @@
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:indiabana_app/app/modules/home/controllers/home_controller.dart';
+import 'package:indiabana_app/app/shared/constants/color_constants.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CommonAppBar({super.key, required this.title});
@@ -6,10 +10,21 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(title),
-      centerTitle: true,
-      actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
+    final controller = Get.find<HomeController>();
+    return EasySearchBar(
+      onSearch: (val) {},
+      title: const Center(
+        child: Text(
+          'INDIABANA',
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+      searchBackgroundColor: ColorConstants.indiabanaDarkBlue,
+      asyncSuggestions: (val) async => await controller.searchProducts(val),
+      onSuggestionTap: (data) {
+        controller.getProductId(data);
+      },
     );
   }
 

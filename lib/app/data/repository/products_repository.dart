@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:indiabana_app/app/data/models/response/product_new_publication_response.dart';
 import 'package:indiabana_app/app/data/models/response/product_new_response.dart';
+import 'package:indiabana_app/app/data/models/response/products_all_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_cat_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_related_response.dart';
 import 'package:indiabana_app/app/data/models/response/products_stock_response.dart';
@@ -13,6 +14,21 @@ class ProductsRepository {
   final ProductsApi productsApi;
 
   ProductsRepository(this.productsApi);
+
+  //get all products with pagination
+  Future<GetAllProductsResponse> getAllProducts(
+      {int page = 1, int limit = 10, String searchTerm = ''}) async {
+    try {
+      final response =
+          await productsApi.getAllProducts(page, limit, searchTerm);
+      final products = GetAllProductsResponse.fromJson(
+          response.data as Map<String, dynamic>);
+      return products;
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
 
   Future<ProductsByCatResponse> getProductsByCategory(String catId) async {
     try {

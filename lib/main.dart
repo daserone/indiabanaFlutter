@@ -24,9 +24,7 @@ void main() async {
       initialBinding: AppBinding(),
       getPages: AppPages.routes,
       theme: ThemeConfig.lightTheme,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-      ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
         Locale('en', 'US'),
         Locale('es', 'ES'),

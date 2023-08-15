@@ -7,6 +7,18 @@ class ProductsApi {
 
   ProductsApi({required this.dioClient});
 
+  //get all products with pagination
+  Future<Response> getAllProducts(
+      int page, int limit, String searchTerm) async {
+    try {
+      final Response response = await dioClient
+          .get('/products?page=$page&limit=$limit&term=$searchTerm');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Response> getProductsByCategory(String catId) async {
     try {
       final Response response = await dioClient

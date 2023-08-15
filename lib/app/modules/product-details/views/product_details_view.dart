@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_add_question.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_bottom_bar.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_description.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_details.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_gallery.dart';
-import 'package:indiabana_app/app/modules/ProductDetails/views/widgets/product_related_list.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_add_question.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_bottom_bar.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_description.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_details.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_gallery.dart';
+import 'package:indiabana_app/app/modules/product-details/views/widgets/product_related_list.dart';
 import 'package:indiabana_app/app/shared/constants/constants.dart';
 
 import '../controllers/product_details_controller.dart';
