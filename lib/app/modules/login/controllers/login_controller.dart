@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:indiabana_app/app/data/models/request/auth_login_request.dart';
+import 'package:indiabana_app/app/data/models/request/auth_register_request.dart';
 import 'package:indiabana_app/app/data/repository/auth_repository.dart';
 import 'package:indiabana_app/app/data/storage/storage_service.dart';
 import 'package:indiabana_app/app/di/service_locator.dart';
@@ -49,7 +50,7 @@ class LoginController extends GetxController {
         if (resp.type == 'error') {
           Get.snackbar(
             'Error',
-            resp.message?.translation ?? '',
+            resp.message?.original ?? '',
             backgroundColor: Colors.red,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
@@ -58,7 +59,7 @@ class LoginController extends GetxController {
         }
         Get.snackbar(
           'Éxito',
-          resp.message?.translation ?? '',
+          resp.message?.original ?? '',
           backgroundColor: Colors.green,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -67,6 +68,43 @@ class LoginController extends GetxController {
         controller.saveUser(resp.data!.token!);
         controller.getProfile();
         Get.offNamed('/home');
+      } catch (e) {
+        LoggerService().errorLog(e.toString());
+      }
+    }
+  }
+
+  //sign up
+  void signUp() async {
+    if (formKey.currentState!.validate()) {
+      try {
+        RegisterRequest req = RegisterRequest(
+          email: emailController.text,
+          password: passwordController.text,
+          name: nameController.text,
+        );
+        LoggerService().infoLog(req.toJson().toString());
+        final resp = await _authRepository.signUp(req);
+        LoggerService().infoLog(resp.toJson().toString());
+        LoggerService().infoLog(resp.type!);
+        if (resp.type == 'error') {
+          Get.snackbar(
+            'Error',
+            resp.message?.original ?? '',
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return;
+        }
+        Get.snackbar(
+          'Éxito',
+          resp.message?.original ?? '',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        isLogin = true;
       } catch (e) {
         LoggerService().errorLog(e.toString());
       }

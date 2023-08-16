@@ -146,7 +146,9 @@ class FormLogin extends StatelessWidget {
                   height: 50,
                   width: Get.width,
                   child: ElevatedButton(
-                    onPressed: controller.login,
+                    onPressed: controller.isLogin
+                        ? controller.login
+                        : controller.signUp,
                     child: Text(
                       controller.isLogin ? 'Ingresar' : 'Registrarse',
                     ),
